@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cfconnector-backup
+spec:
+  schedule: "* * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: cfconnector
+        spec:
+          restartPolicy: OnFailure
+
+          containers:
+            - name: byou-backup
+              image: busybox
+              # command: [ "sh", "-c", "/apa/acript.sh" ]
+
+              env:
+                - name: VAULT_AUTH
+                  value: apeks-k-po-r1-apa-tools
+                - name: VAULT_ROLE
+                  value: apeks-vault-role
+
+              volumeMounts:
+                - name: script
+                  mountPath: /apa/script.sh
+                  subPath: script.sh
+
+          volumes:
+            - name: script
+              configMap:
+                name: script-sh
+                defaultMode: 0775
+                items:
+                  - key: script.sh
+                    path: script.sh

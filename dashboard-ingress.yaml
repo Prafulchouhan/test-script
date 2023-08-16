@@ -1,0 +1,14 @@
+apiVersion: networing.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+space:
+  rules:
+  - host: dashboard.com 
+    http:
+      paths:
+      - backend:
+          serviceName: ingress-nginx-controller-admission
+          servicePort: 443
+
