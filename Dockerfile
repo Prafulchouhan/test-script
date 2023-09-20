@@ -1,5 +1,5 @@
-# Use a basic Linux image as a parent image
-FROM debian:bullseye-slim
+FROM busybox
 
-# Define the command to print a message
-CMD ["echo", "Hello, Docker!"]
+RUN echo "I'm simple!"
+COPY ./stranger /stranger
+RUN cat /stranger
