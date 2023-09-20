@@ -1,6 +1,5 @@
-FROM ubuntu:latest
-# Copy the shell script to the container's filesystem
-COPY cfconector-backup.sh /myscript.sh
+# Use a basic Linux image as a parent image
+FROM debian:bullseye-slim
 
-# Run the shell script when the container starts
-CMD ["/bin/bash", "/myscript.sh"]
+# Define the command to print a message
+CMD ["echo", "Hello, Docker!"]
