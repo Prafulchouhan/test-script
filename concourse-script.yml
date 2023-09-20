@@ -1,0 +1,41 @@
+platform: linux
+container_limits: {}
+
+# Use the 'docker' image from Docker Hub
+image_resource:
+  type: registry-image
+  source:
+    repository: docker
+    tag: latest
+
+# We will provide an input called 'git' to this Task
+inputs:
+  - name: git
+
+# Define an output for the built Docker image
+outputs:
+  - name: built-image
+
+# Task to build the Docker image using a Dockerfile
+run:
+  path: /bin/sh
+  args:
+    - -c
+    - |
+      # Navigate to the directory containing your Dockerfile and Spring Boot application
+      cd git
+
+      # Build the Docker image using the Docker CLI
+      docker build -t prafulchouhan/mockq-concorse:latest .
+
+      # Tag the image
+      docker tag prafulchouhan/mockq-concorse:latest prafulchouhan/mockq-concorse:latest
+
+      # Save the image as a tar file
+      docker save -o image/mockq.tar prafulchouhan/mockq-concorse:latest
+
+      cd image
+
+      ls
+
+
